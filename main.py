@@ -5,7 +5,16 @@
 #send results to client
 #If the client is still there, get the next set of commands and repeat. Otherwise, wait for a new client.
 
-print('\n\n==========main.py running==========\n\n')
+#Note for indicator LED: pins['i'].value(0) turns it on and pins['i'].value(1) turns it off.
+
+#Two blinks on the indicator to show startup
+pins['i'].value(0)
+time.sleep(0.5)
+pins['i'].value(1)
+time.sleep(0.5)
+pins['i'].value(0)
+time.sleep(0.5)
+pins['i'].value(1)
 
 setLED('r', 512)
 time.sleep(0.5)

@@ -21,9 +21,9 @@ def updateTime(itpHost='us.pool.itp.org'):
     ntptime.settime()
 
 #Initialize LEDs. IO15 - Red, IO13 - Green, IO12 - Blue
-vals = {'r': 0,              'g': 0,              'b': 0}
-pins = {'r': Pin(15, Pin.OUT),        'g': Pin(13, Pin.OUT),        'b': Pin(12, Pin.OUT)}
-pwms = {'r': PWM(pins['r']), 'g': PWM(pins['g']), 'b': PWM(pins['b'])}
+vals = {'r': 0,                'g': 0,                'b': 0}
+pins = {'r': Pin(14, Pin.OUT), 'g': Pin(15, Pin.OUT), 'b': Pin(13, Pin.OUT), 'e': Pin(12, Pin.OUT), 'i': Pin(33, Pin.OUT)}
+pwms = {'r': PWM(pins['r']),   'g': PWM(pins['g']),   'b': PWM(pins['b'])}
 
 def setLED(channel, value):
     #Type check, value should be int
@@ -39,7 +39,7 @@ def setLED(channel, value):
     if not channel in ('r', 'g', 'b'):
         raise ValueError('LED channel {} out of range.'.format(channel))
 
-#LED value inputs should be 0-1024. 1024 should become 0, 1 should become 1023, and 0 should disable PWM.
+    #LED value inputs should be 0-1024. 1024 should become 0, 1 should become 1023, and 0 should disable PWM.
     #Disable the pwm and set the pin high to turn off the led
     if value == 0:
         pwms[channel].deinit()
@@ -51,6 +51,11 @@ def setLED(channel, value):
         #Save the value in vals for comparison next call
         vals[channel] = value
 
+def fadeLED(channel, targetValue):
+    oldValue = 1024 - pwms[channel].duty()      #PICK UP HERE==============
+
 setLED('r', 0)
 setLED('g', 0)
 setLED('b', 0)
+pins['e'].value(1)
+pins['i'].value(1)
