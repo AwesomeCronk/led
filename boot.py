@@ -28,10 +28,10 @@ pwms = {'r': PWM(pins['r']),   'g': PWM(pins['g']),   'b': PWM(pins['b'])}
 def setLED(channel, value):
     #Type check, value should be int
     if not type(value) is int:
-        raise ValueError('LED value is of wrong type.')
+        raise TypeError('LED value is of wrong type.')
     #Type check, channel should be str
     if not type(channel) is str:
-        raise ValueError('LED channel is of wrong type.')
+        raise TypeError('LED channel is of wrong type.')
     #Range check, value should be 0-1024
     if not 0 <= value <= 1024:
         raise ValueError('LED value of {} out of range.'.format(value))
